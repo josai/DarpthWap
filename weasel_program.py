@@ -3,6 +3,7 @@ import string
 import os
 import time
 
+
 def weasel_program():
     while True:
         clear_screen()
@@ -14,31 +15,30 @@ def weasel_program():
         len_of_word = data[1]
         avg_time = average_time_per_character(3000, len_of_word)
         final_statement(avg_time, years_elapsed, num_of_generations)
-        
 
 
 def prompt_user():
     while True:
-        info_1 = ('The weasel program, Dawkins weasel, or the Dawkins weasel'+
-                ' is a thought experiment and a variety of computer '+
-                'simulations illustrating it. Their aim is to demonstrate '+
-                'that the process that drives evolutionary systems random '+ 
-                'variation combined with nonrandom cumulative selection is '+
-                'different from pure chance. - wikipedia'
-                 )
-        info_2 = ('This program accepts a seed and target word as input. '+
-                'The seed word is simply the word you want to start with and'+
-                ' the target is the word you want to end with. The words can'+
-                ' be completely random!'
-                 )
-        info_3 = ('The program also calculates how long it would take to get'+
-                ' to your target word by randomly generating strings '+
-                'of random characters on your machine. Randomly generating '+
-                'strings is basically the same as putting a monkey at a '+
-                'typewriter, eventually you will get Shakespeare, or the'+
-                ' script for The Phantom Menace if you are too impatient,'+
-                ' surrounded by yes monkeys and rush production.'
-                 )
+        info_1 = ('The weasel program, Dawkins weasel, or the Dawkins weasel' +
+                  ' is a thought experiment and a variety of computer ' +
+                  'simulations illustrating it. Their aim is to demonstrate ' +
+                  'that the process that drives evolutionary systems random ' +
+                  'variation combined with nonrandom cumulative selection is' +
+                  ' different from pure chance. - wikipedia'
+                  )
+        info_2 = ('This program accepts a seed and target word as input. ' +
+                  'The seed word is simply the word you want to start with ' +
+                  'and the target is the word you want to end with. The ' +
+                  'words can be completely random!'
+                  )
+        info_3 = ('The program also calculates how long it would take to ' +
+                  'get to your target word by randomly generating strings ' +
+                  'of random characters on your machine. Randomly generating' +
+                  ' strings is basically the same as putting a monkey at a ' +
+                  'typewriter, eventually you will get Shakespeare, or the' +
+                  ' script for The Phantom Menace if you are too impatient,' +
+                  ' surrounded by yes monkeys and rush production.'
+                  )
         print_lines(lines=(['']*2))
         print_lines(normalize_string(info_1, 4, 79))
         print_lines(lines=(['']*1))
@@ -78,7 +78,7 @@ def average_time_per_character(samples, num):
     seconds_in_year = 3.154e+7
     years = time_in_seconds / seconds_in_year
     return years
-                
+
 
 def normalize_string(string, start_space, max_line_ength):
     """
@@ -139,12 +139,11 @@ def evolution(inputs):
     print ''
     print '    GEN   DNA'
     while True:
-        generation = birth_generation([seed,target], 100)
-       # print_generation(generation)
+        generation = birth_generation([seed, target], 100)
         generation.reverse()
         seed = generation[0][1]
         fitness = generation[0][0]
-        print_generation([[fitness,seed]],gen_num)
+        print_generation([[fitness, seed]], gen_num)
         gen_num += 1
         if fitness >= 100:
             print ''
@@ -159,7 +158,7 @@ def birth_generation(inputs, num_babies):
         new_borns.append(baby)
     new_borns.sort()
     return new_borns
-    
+
 
 def mutate(inputs):
     mutation_rate = 0.05
@@ -170,8 +169,8 @@ def mutate(inputs):
         if chance > (1.0 - mutation_rate):
             gene = random.choice(string.printable)
         new_DNA += gene
-    fitness = fitness_function(new_DNA,inputs[1])
-    return [fitness,new_DNA]
+    fitness = fitness_function(new_DNA, inputs[1])
+    return [fitness, new_DNA]
 
 
 def fitness_function(new_DNA, DNA):
@@ -189,14 +188,14 @@ def print_generation(generation, gen_num):
     gen_num = (str(gen_num) + '.          ')[:6]
     for baby in generation:
         print_statement = ((" "*4) +
-                            gen_num + 
-                            str(baby[1]) +
-                            '    Fitness: ' +
-                            str(baby[0]) +
-                            '%'
-                            )
+                           gen_num +
+                           str(baby[1]) +
+                           '    Fitness: ' +
+                           str(baby[0]) +
+                           '%'
+                           )
         print print_statement
-        
+
 
 def final_statement(time, actual_time, gen_num):
     """
@@ -212,7 +211,7 @@ def final_statement(time, actual_time, gen_num):
             length = 1000
         years = str(time)[:length]
     else:
-        years = add_comma(str(int(time)))   
+        years = add_comma(str(int(time)))
     percent = str(((time / actual_time)))
     universes = add_comma(str(int(time / age_of_the_universe)))
     end_1 = ('It would take %s years to correctly, randomly generate this ' +
@@ -220,21 +219,25 @@ def final_statement(time, actual_time, gen_num):
     end_2 = ('It would take %s years to correctly, randomly generate this' +
              ' string from pure chance on this computer. That is longer ' +
              'than the universe has existed. which is 13.82 billion years.' +
-             ' Thats %s universes!!! ') % (years,universes,)
+             ' Thats %s universes!!! ') % (years, universes, )
     end_stat = ('The actual time it took was %s seconds, which is %s times' +
-             ' faster because of evolution via selection. %s creatures ' +
-             'or %s generations had to be born in order to get to this ' +
-             'answer.'
-             ' ' ) % (str(actual_time*3.154e+7),percent,str(gen_num*100),str(gen_num))
+                ' faster because of evolution via selection. %s creatures ' +
+                'or %s generations had to be born in order to get to this ' +
+                'answer.'
+                ' ') % (str(actual_time*3.154e+7),
+                        percent, str(gen_num*100),
+                        str(gen_num)
+                        )
     if time < age_of_the_universe:
         end = end_1 + end_stat
     else:
         end = end_2 + end_stat
-    statement  = normalize_string(end, 4, 79)
+    statement = normalize_string(end, 4, 79)
+    joke = 'Now spending the next %s years calculating that string!' % (years,)
     print_lines(statement)
     sleep(16)
     print ''
-    print '    Now spending the next %s years calculating that string!!!' % (years,)
+    print_lines(normalize_string(joke, 4, 79))
     print ''
     sleep(8)
     print'    Just kidding!!!'
@@ -256,9 +259,7 @@ def add_comma(a_string):
             new_string += c
             count = count + 1
         return new_string[::-1]
-    
     return a_string[::-1]
 
 
 weasel_program()
-
